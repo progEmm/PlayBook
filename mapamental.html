@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayBook Respuesta Ransomware</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .mind-map {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .phase {
+            background: linear-gradient(135deg, #f6f8fb 0%, #ffffff 100%);
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 6px solid;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .phase:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .phase-1 { border-left-color: #e53e3e; }
+        .phase-2 { border-left-color: #dd6b20; }
+        .phase-3 { border-left-color: #d69e2e; }
+        .phase-4 { border-left-color: #38a169; }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .phase-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .phase-1 .phase-number { background: #e53e3e; }
+        .phase-2 .phase-number { background: #dd6b20; }
+        .phase-3 .phase-number { background: #d69e2e; }
+        .phase-4 .phase-number { background: #38a169; }
+
+        .phase-title {
+            font-size: 1.8em;
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .phase-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .category {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .category:hover {
+            border-color: #cbd5e0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .category-title {
+            font-size: 1.2em;
+            color: #4a5568;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon {
+            font-size: 1.3em;
+        }
+
+        .category ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .category li {
+            padding: 8px 0 8px 20px;
+            color: #4a5568;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .category li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #718096;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: #fef5e7;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+            margin-top: 15px;
+        }
+
+        .highlight-title {
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 8px;
+        }
+
+        .alert-box {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .alert-title {
+            font-weight: 700;
+            color: #991b1b;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .phase-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ PlayBook Respuesta ante Ransomware</h1>
+        <p class="subtitle">Incidentes de Ciberseguridad - Manuel Egea Morote</p>
+
+        <div class="mind-map">
+            <!-- FASE 1 -->
+            <div class="phase phase-1">
+                <div class="phase-header">
+                    <div class="phase-number">1</div>
+                    <div class="phase-title">Detección y Triaje Inicial</div>
+                </div>
+                <div class="phase-content">
+                    <div class="category">
+                        <div class="category-title"><span class="icon">🔍</span> IoCs - Indicadores de Compromiso</div>
+                        <ul>
+                            <li><strong>Notificaciones:</strong> Imposibilidad de acceso a servicios</li>
+                            <li>Archivos con caracteres inusuales</li>
+                            <li><strong>Sistema:</strong> Consumo excesivo de memoria/disco</li>
+                            <li>Proceso de cifrado activo detectado</li>
+                        </ul>
+                    </div>
+
+                    <div class="category">
+                        <div class="category-title"><span class="icon">🔬</span> Triaje Técnico</div>
+                        <ul>
+                            <li>Buscar nota de rescate (.txt / .html)</li>
+                            <li>Verificar extensiones de archivos cifrados</li>
+                            <li>Revisar procesos sospechosos activos</li>
+                        </ul>
+                    </div>
+
+                    <div class="category">
+                        <div class="category-title"><span class="icon">⚠️</span> Evaluación de Peligrosidad</div>
+                        <ul>
+                            <li><strong>Marco:</strong> CCN-STIC 817</li>
+                            <li><strong>Nivel:</strong> ALTO</li>
+                            <li>Afecta operatividad (facturación)</li>
+                            <li>Compromiso de servicios críticos</li>
+                            <li>Posible robo de información</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FASE 2 -->
+            <div class="phase phase-2">
+                <div class="phase-header">
+                    <div class="phase-number">2</div>
+                    <div class="phase-title">Contención Inmediata</div>
+                </div>
+                
+                <div class="alert-box">
+                    <div class="alert-title">🚨 REGLA DE ORO: Aislar el dispositivo infectado</div>
+                    <div>Prioridad absoluta: Limitar el impacto y evitar la propagación</div>
+                </div>
+
+                <div class="phase-content">
+                    <div class="category">
+                        <div class="category-title"><span class="icon">🔌</span> Aislamiento Inmediato</div>
+                        <ul>
+                            <li>Desconectar cable de red físicamente</li>
+                            <li>Desactivar Wi-Fi del equipo</li>
+                            <li>Realizar de forma INMEDIATA</li>
+                            <li>No esperar confirmaciones</li>
+                        </ul>
+                    </div>
+
+                    <div class="category">
+                        <div class="category-title"><span class="icon">🛑</span> Detener Propagación</div>
+                        <ul>
+                            <li>Identificar equipos "vecinos"</li>
+                            <li>Detectar comportamientos anómalos</li>
+                            <li>Desconectar equipos sospechosos</li>
+                            <li>Revisar recursos compartidos en red</li>
+                        </ul>
+                    </div>
+
+                    <div class="category">
+                        <div class="category-title"><span class="icon">🔒</span> Preservación Forense</div>
+                        <ul>
+                            <li>Si no está totalmente cifrado: apagar equipo</li>
+                            <li>Evitar que continúe el cifrado</li>
+                            <li>Preservar evidencias en disco</li>
+                            <li>Documentar estado del sistema</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FASE 3 -->
+            <div class="phase phase-3">
+                <div class="phase-header">
+                    <div class="phase-number">3</div>
+                    <div class="phase-title">Identificación de la Amenaza</div>
+                </div>
+                <div class="phase-content">
+                    <div class="category">
+                        <div class="category-title"><span class="icon">📝</span> Análisis de Metadatos</div>
+                        <ul>
+                            <li>Examinar nota de rescate</li>
+                            <li>Extraer emails de contacto</li>
+                            <li>Identificar direcciones de wallets cripto</li>
+                            <li>Buscar coincidencias en internet</li>
+                        </ul>
+                    </div>
+
+                    <div class="category">
+                        <div class="category-title"><span class="icon">🔧</span> Herramientas Externas</div>
+                        <ul>
+                            <li>Servicios de identificación INCIBE</li>
+                            <li>Plataformas de fabricantes antivirus</li>
+                            <li>Cargar muestra de archivo cifrado</li>
+                            <li>Identificar variante de ransomware</li>
+                        </ul>
+                    </div>
+
+                    <div class="category">
+                        <div class="category-title"><span class="icon">🎯</span> Vector de Ataque</div>
+                        <ul>
+                            <li><strong>RDP:</strong> Revisar logs de inicios de sesión</li>
+                            <li><strong>Phishing:</strong> Analizar logs de correo</li>
+                            <li><strong>Spearphishing:</strong> Según MITRE ATT&CK</li>
+                            <li><strong>CCN-CERT:</strong> Consultar plataforma REYES</li>
+                            <li>Buscar IoCs relacionados con la variante</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FASE 4 -->
+            <div class="phase phase-4">
+                <div class="phase-header">
+                    <div class="phase-number">4</div>
+                    <div class="phase-title">Mitigación y Recuperación</div>
+                </div>
+                <div class="phase-content">
+                    <div class="category">
+                        <div class="category-title"><span class="icon">🗑️</span> Acción Técnica</div>
+                        <ul>
+                            <li><strong>Método:</strong> Borrado completo (formateo)</li>
+                            <li>Garantiza eliminación total</li>
+                            <li>Elimina backdoors y persistencia</li>
+                            <li>Opción recomendada por la guía</li>
+                        </ul>
+                    </div>
+
+                    <div class="category">
+                        <div class="category-title"><span class="icon">💾</span> Recuperación de Datos</div>
+                        <div class="highlight">
+                            <div class="highlight-title">⚠️ PRECAUCIÓN CRÍTICA</div>
+                            <ul style="margin-top: 10px;">
+                                <li><strong>Validación Backup:</strong> Localizar última copia libre de compromiso</li>
+                                <li>Verificar fecha anterior a actividad anómala</li>
+                                <li><strong>Integridad:</strong> Escanear con antivirus actualizado</li>
+                                <li>Evitar "re-envenenamiento" del sistema</li>
+                                <li>Probar en entorno aislado primero</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="category">
+                        <div class="category-title"><span class="icon">🔐</span> Cierre de Vulnerabilidades</div>
+                        <ul>
+                            <li><strong>Si entrada por RDP:</strong>
+                                <ul style="padding-left: 20px; margin-top: 8px;">
+                                    <li>MITRE M1054: Configuración software</li>
+                                    <li>Implementar MFA</li>
+                                    <li>Limitar accesos</li>
+                                </ul>
+                            </li>
+                            <li><strong>Si entrada por Phishing:</strong>
+                                <ul style="padding-left: 20px; margin-top: 8px;">
+                                    <li>Configurar SPF/DKIM</li>
+                                    <li>MITRE M1049: Antivirus</li>
+                                    <li>Formación usuarios</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
